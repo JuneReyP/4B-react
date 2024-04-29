@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .app-container{
+            width: 350px;
+            height: 300px;
+        }
+        .calculator{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .display{
+            grid-column-start: 1;
+            grid-column-end: 5;
+            text-align: end;
+            font-size: 30px;
+            border: 1px solid black;
+            padding-right: 10px;
+            padding-top: 5px;
+        }
+        button{
+            height: 50px;
+            background-color: white;
+            border: 1px solid lightgray;
+        }
+        button.operator{
+            background-color: darkgray;
+        }
+    </style>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        // INTRO
+        // const hello = React.createElement('h5', {}, 'Hello React!');
+        // const hello = <p>Hello React! In Paragraph</p>;
+        // const name = "Ryan";
+        // const hello = (
+        //     <div>
+        //         <h1>Lorem, ipsum dolor.<i>{name}</i></h1>
+        //         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+        //         <a href="">sample link</a>
+        //     </div>
+        // );
+        // ReactDOM.render(hello, document.getElementById('app'));
+        // ####################################################################
+        // <!--- Functional Components --->
+        // function add(fname, lname, age){
+        //     let ans = 'Hello, my name is ' + fname + ' ' +lname;
+        //     return (ans);
+        // }
+
+        // arrow function
+        // const sample = () => (
+        //     <div>
+        //         <h1>Hello React!</h1>
+        //         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laudantium, laborum?</p>
+        //     </div>
+        // );
+
+        // ReactDOM.render(sample(), document.getElementById('app'));
+
+        // #######################################################################
+        // COMPONENTS
+        // <!-- Must be camel-case -->
+        // const Hello = () =>(            
+        //     <form action="">
+        //         <div>
+        //             <label>First Name: </label><input type="text" />
+        //         </div>
+        //         <div>
+        //             <label>Last Name: </label><input type="text" />
+        //         </div>
+        //         <div>
+        //             <label>Age: </label><input type="number" />
+        //         </div>
+        //         <div>
+        //             <label>Address: </label><input type="text" />
+        //         </div>
+        //         <div>
+        //             <button>Submit</button>
+        //         </div>
+        //     </form>
+            
+        // );
+
+        // USING PROPS
+        // const Hello = (props) => (
+        //     <h1>Hello, {props.name}! I am {props.age} yrs old.</h1>
+        // );
+        // ReactDOM.render(<Hello name="Juan" age={15}/>, document.getElementById('app'));
+
+        //===============================================================================================
+//React callback function
+// parent component
+function Calculator(){
+    return(
+        <div className="calculator">
+            <div className="display">
+                0
+            </div>
+
+            <CalcButton value={7}/>
+            <CalcButton value={8}/>
+            <CalcButton value={9}/>
+            <CalcButton className="operator" value="/"/>
+
+            <CalcButton value={4}/>
+            <CalcButton value={5}/>
+            <CalcButton value={6}/>
+            <CalcButton className="operator" value="*"/>
+
+            <CalcButton value={1}/>
+            <CalcButton value={2}/>
+            <CalcButton value={3}/>
+            <CalcButton className="operator" value="+"/>
+
+            <CalcButton value="C"/>
+            <CalcButton value={0}/>
+            <CalcButton className="operator" value="="/>
+            <CalcButton className="operator" value="+"/>
+        </div>
+    );
+}
+
+// child component
+function CalcButton(props){
+    return(
+        <button className={props.className}>{props.value}</button>
+    );
+}
+
+ReactDOM.render(<div className="app-container"><Calculator/></div>, document.getElementById('app'));
+    </script>
+</body>
+</html>
