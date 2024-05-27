@@ -9,6 +9,7 @@
         .app-container{
             width: 350px;
             height: 300px;
+            margin: 50px;
         }
         .calculator{
             display: grid;
@@ -112,18 +113,61 @@ function Calculator(){
         newValue = calc.current + value;
        }       
 
-       setCalc({current: newValue, isInitial: false})
+       setCalc({
+        current: newValue, 
+        isInitial: false,
+        total: calc.total,
+        preOp: calc.preOp})
     }
     // const [display, setDisplay] = React.useState('0');//useState returns an array with 2 elements, the first element is the current state value, the second element is a function that allows you to update the state value
 
     const [calc, setCalc] = React.useState({
         current: '0',
-        isInitial: true
+        isInitial: true,
+        total: '0',
+        preOp: ''
     });
 
+    // function for operators
+    function handleOperator(value){
+        const total = doCalculation();
+        setCalc({
+            current: total.toString(),
+            total: total.toString(),
+            isInitial: true,
+            preOp: value
+        });
+    }
+
+    // function for calculation
+    function doCalculation(){
+        let total = parseFloat(calc.total);
+        switch(calc.preOp){
+            case '*':
+                total *= parseFloat(calc.current); //total = total * calc.current
+                break;
+            case '/':
+                total /= parseFloat(calc.current);
+                break;
+            case '+':
+                total += parseFloat(calc.current);
+                break;
+            case '-':
+                total -= parseFloat(calc.current);
+                break;
+            default:
+                total = parseFloat(calc.current);
+        }
+        return total;
+    }
     // function to handle the clear button
     function handleClear(){
-        setCalc({current: '0', isInitial: true})
+        setCalc({
+            current: '0',
+            isInitial: true,
+            total: '0',
+            preOp: ''
+        })
     }
     return(
         <div className="calculator">
@@ -134,22 +178,22 @@ function Calculator(){
             <CalcButton onClick={handleNumber} value='7'/>
             <CalcButton onClick={handleNumber} value='8'/>
             <CalcButton onClick={handleNumber} value='9'/>
-            <CalcButton className="operator" value="/"/>
+            <CalcButton onClick={handleOperator} className="operator" value="/"/>
 
             <CalcButton onClick={handleNumber} value='4'/>
             <CalcButton onClick={handleNumber} value='5'/>
             <CalcButton onClick={handleNumber} value='6'/>
-            <CalcButton className="operator" value="*"/>
+            <CalcButton onClick={handleOperator} className="operator" value="*"/>
 
             <CalcButton onClick={handleNumber} value='1'/>
             <CalcButton onClick={handleNumber} value='2'/>
             <CalcButton onClick={handleNumber} value='3'/>
-            <CalcButton className="operator" value="+"/>
+            <CalcButton onClick={handleOperator} className="operator" value="+"/>
 
             <CalcButton onClick={handleClear} value="C"/>
             <CalcButton onClick={handleNumber} value='0'/>
-            <CalcButton className="operator" value="="/>
-            <CalcButton className="operator" value="+"/>
+            <CalcButton onClick={handleOperator} className="operator" value="="/>
+            <CalcButton onClick={handleOperator} className="operator" value="-"/>
         </div>
     );
 }
